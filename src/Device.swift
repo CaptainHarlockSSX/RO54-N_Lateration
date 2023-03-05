@@ -10,9 +10,9 @@
 /// and by its ip adress.
 protocol Device: Equatable, Hashable {
 	// Device position in a three-dimensional world
-	var x: Float {get set}
-	var y: Float {get set}
-	var z: Float {get set}
+	var x: Float? {get set}
+	var y: Float? {get set}
+	var z: Float? {get set}
 	
 	// IP adress of the device
 	var ipAdress: String {get set}
