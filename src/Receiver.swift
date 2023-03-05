@@ -7,3 +7,10 @@
 
 import Foundation
 
+struct Receiver: Device {
+    var x: Float?
+    var y: Float?
+    var z: Float?
+    var distance: Float
+    var ipAdress: String
+}
