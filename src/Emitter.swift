@@ -7,4 +7,9 @@
 
 import Foundation
 
-
+struct Emitter: Device {
+    var x: Float? = nil
+    var y: Float? = nil
+    var z: Float? = nil
+    var ipAdress: String
+}
