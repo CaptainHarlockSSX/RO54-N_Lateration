@@ -11,10 +11,11 @@ import Foundation
 /// Define an emitter by its position in a three-dimensional world
 /// and by its ip adress. Position may be unknown as we are trying
 /// to solve it through N-Lateration algorithm, so the coordinates
-/// are optionals.
+/// are optionals. Its name is optionnal, for convenience.
 struct Emitter: Device {
     var x: Float? = nil
     var y: Float? = nil
     var z: Float? = nil
+	var name: String? = nil
     var ipAdress: String
 }
