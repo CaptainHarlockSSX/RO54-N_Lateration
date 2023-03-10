@@ -63,18 +63,19 @@ struct NLaterationSolver {
 		
 		
 		// Convert A and B to matrices
-		let aMat = Matrix(rows: receivers.count * (receivers.count - 1), columns: 3, elements: a)
-		let bMat = Matrix(rows: receivers.count * (receivers.count - 1), columns: 1, elements: b)
+//		let aMat = Matrix(rows: receivers.count * (receivers.count - 1), columns: 3, elements: a)
+//		let bMat = Matrix(rows: receivers.count * (receivers.count - 1), columns: 1, elements: b)
 		
 		// Calculate pseudo-inverse of A
-		guard let aInv = aMat.pseudoInverse() else { return nil }
+//		guard let aInv = aMat.pseudoInverse() else { return nil }
 		
 		// Calculate position of emitter
-		let x = (aInv * bMat)[0, 0]
-		let y = (aInv * bMat)[1, 0]
-		let z = (aInv * bMat)[2, 0]
+//		let x = (aInv * bMat)[0, 0]
+//		let y = (aInv * bMat)[1, 0]
+//		let z = (aInv * bMat)[2, 0]
 		
-		return [x, y, z]
+		return [0,0,0]
+//		return [x, y, z]
 }
 
 	
