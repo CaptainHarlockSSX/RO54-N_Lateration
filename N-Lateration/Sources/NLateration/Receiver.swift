@@ -11,9 +11,9 @@ import Foundation
 /// Define an receiver by its position in a three-dimensional world,
 /// its distance to the emitter and by its ip adress.
 struct Receiver: Device {
-    var x: Float?
-    var y: Float?
-    var z: Float?
+	var x: Float? = 0
+    var y: Float? = 0
+    var z: Float? = 0
     var distance: Float // Distance to the Emitter, given by the exercise
     var ipAdress: String
 }
