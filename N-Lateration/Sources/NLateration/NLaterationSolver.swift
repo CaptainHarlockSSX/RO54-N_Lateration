@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import simd
 
 struct NLaterationSolver {
 	private var receivers: [String: Receiver] = [:] // Dictionnary of Receivers [ipAdress: Receiver]
@@ -47,7 +48,7 @@ struct NLaterationSolver {
 		guard getReceiverCount() >= 4 else {fatalError("Not enough Receivers (\(getReceiverCount()) < 4) to find Emitter position.") }
 		
 		// Reduce area of research
-		computeResearchArea()
+		//computeResearchArea()
 		
 		var a = [Float]()
 		var b = [Float]()
@@ -66,26 +67,33 @@ struct NLaterationSolver {
 				let d = sqrt(pow(r1.distance, 2) - pow(r2.distance, 2) - pow(r1.x!, 2) + pow(r2.x!, 2) - pow(r1.y!, 2) + pow(r2.y!, 2) - pow(r1.z!, 2) + pow(r2.z!, 2))
 				
 				// Add to matrix A and vector B
-				a += [x, y, z]
+				a.append(SIMD3<Float>(x, y, z))
 				b.append(0.5 * d)
 			}
 		}
 		
 		
 		// Convert A and B to matrices
-//		let aMat = Matrix(rows: receivers.count * (receivers.count - 1), columns: 3, elements: a)
-//		let bMat = Matrix(rows: receivers.count * (receivers.count - 1), columns: 1, elements: b)
+		let aMat = float3x3(a[0], a[1], a[2])
+		let bVec = SIMD3<Float>(b[0], b[1], b[2])
+
+		for i in 3..<a.count {
+			aMat += float3x3(a[i-2], a[i-1], a[i])
+			bVec += SIMD3<Float>(b[i], b[i-1], b[i-2])
+		}
 		
+
+
 		// Calculate pseudo-inverse of A
-//		guard let aInv = aMat.pseudoInverse() else { return nil }
+		guard let aInv = aMat.pseudoInverse() else { return nil }
 		
 		// Calculate position of emitter
 //		let x = (aInv * bMat)[0, 0]
 //		let y = (aInv * bMat)[1, 0]
 //		let z = (aInv * bMat)[2, 0]
-		
-		return [0,0,0]
-//		return [x, y, z]
+		let pos = aInv * bVec
+//		return [0,0,0]
+		return [x, y, z]
 	}
 	
 	/// Reduce the area where the Emitter could be by
