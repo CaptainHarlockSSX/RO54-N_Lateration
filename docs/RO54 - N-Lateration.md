@@ -1,8 +1,14 @@
-# RO54 - TD 1 - N-Lateration
+# RO54 - TD1 - N-Lateration
 
 > This report is made by **RASSIÉ Nathan** and **DERAISIN Nicolas**.
 > 
 > It has been written in **Markdown**.
+> 
+> 3D graph has been generated using **GeoGebra**.
+> 
+> Class Diagram has been created with **Mermaid**.
+> 
+> Implementation has been done in **Swift programming language**.
 
 ## Concept and example of an N-Lateration problem
 
@@ -16,10 +22,10 @@ To move itself precisely without colliding any wall or person, <u>the robot has 
 
 Wifi repeaters are installed all across the facilities to efficiently propagate the network for all the users, as we're in 2023 and all need a stable access to the internet.
 
-We know position of wifi repeaters and want to process the position of the robot.
+We know the position of wifi repeaters and want to process the position of the robot.
 Hence we will use wifi repeaters as receivers, use the known distance between the robot (emitter, querying all nearby wifi repeaters) and the receivers by processing the time-response of the signal, then compute the equations of position and find the robot position. 
 
-## Theoretical resolution of a N-Lateration problem
+## Solving of a N-Lateration problem
 
 > **Theorem :** Solving the N-Lateration problem in a N-dimensional space requires N+1 geometrical distances.
 
@@ -37,6 +43,8 @@ Summing up our example, we have :
   
   - Position of emitter
 
+#### Theoretical solving
+
 In a three-dimensional space, let's call $d_i, \forall{i} > 3$ each distance between the emitter and each receiver. Let $(x_i,y_i,z_i)$ the coordinates of each receiver, and $(x,y,z)$ the coordinates of the emitter.
 
 Then :
@@ -45,14 +53,66 @@ $$
 d_i = \sqrt{(x_i-x)^2 + (y_i-y)^2 + (z_i-z)^2}
 $$
 
-Solving this equation system will provide the localisation of the emitter.
+Solving this equation system to find the intersection point will provide the localisation of the emitter, assuming the distances <u>are not</u> colinear. 
 
 > Note : Multiple solving methods and algorithms exists. In computer use-case, choosing one depends on the balance between speed and precision.
 
+#### Graphical solving
+
+Taking what has been said just above, there is an issue with the practical application of the theory. In real world, the intersection may not exist, because of an error on the measurement. 
+
+Using a graphical approch, we can consider each receivers as a sphere in a three-dimensionnal world, with their position as the center of the sphere and the distance to the Emitter as the radius.
+
+| Real Life                   | Model              |
+|:---------------------------:|:------------------:|
+| Position of a receiver      | Center of a sphere |
+| Distance receiver - emitter | Radius of a sphere |
+
+That being said, in order to solve the problem we need to find the closest point to the theoretical intersection of all sphere.
+
+Let's take the datas given for the current application.
+
+| Receivers | Position        | Distance to  the Emitter |
+|:---------:|:---------------:|:------------------------:|
+| R1        | (0.5, 0.5, 0.5) | 3                        |
+| R2        | (4, 0, 0)       | 2                        |
+| R3        | (4, 5, 5)       | 4.2                      |
+| R4        | (3, 3, 3)       | 2.5                      |
+
+Using **GeoGebra** website, we can draw a 3D representation of the datas and visualize approximately the position of our Emitter. We can also notice that all spheres does not intersect, as described by the measurement error of real life application.
+
+![3D Representation of the problem](img/Geogebra%203D%20Graph.png)
+
 ## Algorithm
 
-```mermaid
+In computer science, solving this problem by taking the measurement error into account results in the implementation of a **minimization algorithm**. Here, we want to <u>minimize the sum of all distances to the emitter</u>.
 
-```
+We can do it iteratively, but first we have to reduce the searching area. This is possible by defining a **minimum** and a **maximum** position, using thoses of the receivers. Again, let $(x_i,y_i,z_i)$ the coordinates of each receiver. Then :
+
+$$
+minPositionX \leqslant x_i \leqslant maxPositionX \\
+minPositionY \leqslant z_i \leqslant maxPositionY \\
+minPositionZ \leqslant x_i \leqslant maxPositionZ
+$$
+
+Eventually, we will be able to process the sum of distances for each point in the reduce area (by defining an iterative step) and find the position of the Emitter.
+
+$$
+emitterPosition = min(\sum_{i = minPos,step}^{maxPos}d_i)
+$$
 
 ## Implementation
+
+#### Program architecture
+
+To implement this application, an object-oriented approach fits, as we have differents types of objects with their own properties being compute together. To structure our code, we made a class diagram using **Mermaid** generator.
+
+![](img/ClassDiagram.svg)
+
+Typically, we have mutliple **Devices**, such as an **Emitter** and a **Receiver**. They have coordinates in a 3D world, an identifier and possibly a name. When calling the **N-Lateration** class, filling it with the Emitter to localize and the list of Receivers, we can then call the *nLaterationSolver* function to solve the Emitter's position.
+
+## Results
+
+#### Analytical
+
+#### Computational
