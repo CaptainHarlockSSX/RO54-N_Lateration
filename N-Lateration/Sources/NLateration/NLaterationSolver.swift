@@ -7,10 +7,16 @@
 
 import Foundation
 
-
 struct NLaterationSolver {
 	private var receivers: [String: Receiver] = [:] // Dictionnary of Receivers [ipAdress: Receiver]
     private var emitter: Emitter
+	private var minAreaPoint: [Float] = []
+	private var maxAreaPoint: [Float] = []
+	
+	init(receivers: [String : Receiver], emitter: Emitter) {
+		self.receivers = receivers
+		self.emitter = emitter
+	}
 	
 	/// Add a Receiver to Receivers dictionnary using itself and its ip adress as key
 	mutating func add(receiver: Receiver, withIpAdress ipAdress: String) {
@@ -35,9 +41,13 @@ struct NLaterationSolver {
 	/// Try to solve position of the emitter by minimizing
 	/// the sum of distances to all Receivers. Return an optional
 	/// with x, y, z coordinates if the operation succeed, nil otherwise.
-    func solveEmitterPosition() -> [Float]? {
+	mutating func solveEmitterPosition() throws -> [Float]? {
 		
-		guard receivers.count >= 4 else { return nil } // No position to be solved if there is less than 4 receivers
+		// Ensure there is four or more receivers in the dictionnary to be able to solve the emitter position
+		guard receivers.count >= 4 else { throw fatalError("Not enough Receivers (\(getReceiverCount()) < 4) to find Emitter position.") }
+		
+		// Reduce area of research
+		computeResearchArea()
 		
 		var a = [Float]()
 		var b = [Float]()
@@ -76,7 +86,49 @@ struct NLaterationSolver {
 		
 		return [0,0,0]
 //		return [x, y, z]
-}
-
+	}
+	
+	/// Reduce the area where the Emitter could be by
+	/// defining a min and a max point using Receivers's coordinates
+	private mutating func computeResearchArea() {
+		
+		// Initializing default value of min and max area
+		// point using a random receiver's coordinates
+		let randomKey = receivers.randomElement()!.key // Get the key of a random receiver
+		let randomReceiver = receivers[randomKey]! // Get the random receiver
+		
+		minAreaPoint[0] = randomReceiver.x!
+		minAreaPoint[1] = randomReceiver.y!
+		minAreaPoint[2] = randomReceiver.z!
+		
+		maxAreaPoint[0] = randomReceiver.x!
+		maxAreaPoint[1] = randomReceiver.y!
+		maxAreaPoint[2] = randomReceiver.z!
+		
+		for (_, receiver) in receivers {
+			
+			// Skip the iteration of the random receiver because its values are the default ones
+			guard receiver != randomReceiver else { continue }
+			
+			if minAreaPoint[0] > receiver.x! {
+				minAreaPoint[0] = receiver.x!
+			}
+			if minAreaPoint[1] > receiver.y! {
+				minAreaPoint[1] = receiver.y!
+			}
+			if minAreaPoint[2] > receiver.z! {
+				minAreaPoint[2] = receiver.z!
+			}
+			if maxAreaPoint[0] < receiver.x! {
+				maxAreaPoint[0] = receiver.x!
+			}
+			if maxAreaPoint[1] < receiver.y! {
+				maxAreaPoint[1] = receiver.y!
+			}
+			if maxAreaPoint[2] < receiver.z! {
+				maxAreaPoint[2] = receiver.z!
+			}
+		}
+	}
 	
 }

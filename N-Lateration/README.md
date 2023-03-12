@@ -1,3 +1,3 @@
-# N-Lateration
+# N-Lateration Package
 
-A description of this package.
+A Swift package providing Devices (Emitter and Receiver) and a position solver using N-Lateration algorithm.
