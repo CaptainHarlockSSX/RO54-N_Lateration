@@ -44,7 +44,7 @@ struct NLaterationSolver {
 	mutating func solveEmitterPosition() throws -> [Float]? {
 		
 		// Ensure there is four or more receivers in the dictionnary to be able to solve the emitter position
-		guard receivers.count >= 4 else { throw fatalError("Not enough Receivers (\(getReceiverCount()) < 4) to find Emitter position.") }
+		guard receivers.count >= 4 else { fatalError("Not enough Receivers (\(getReceiverCount()) < 4) to find Emitter position.") }
 		
 		// Reduce area of research
 		computeResearchArea()
