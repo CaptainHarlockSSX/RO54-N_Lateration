@@ -115,51 +115,61 @@ Typically, we have mutliple **Devices**, such as an **Emitter** and a **Receiver
 
 #### Analytical
 
+To make the analytical resolution, we used Géogebra3D to make an estimation of the emitter position. We look for the intersection intersecting the most receivers (the red line) to place a point. We will try to find the position on this line that is closest to the last sphere that is not part of the intersection.
+
+![Geogebra3D View 1.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20View%201.png)
+
+![Geogebra3D View 2.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20View%202.png)
+
+We obtain the H point, a result close to the computational analysis.
+
+![Geogebra3D Screenshoot Cut.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20Screenshoot%20Cut.png)
+
 #### Computational
 
 Using **Swift 5**, a recent and convenient programming language, implementing the solver function gives us the following code :
 
 ```swift
-	/// Try to solve position of the emitter by minimizing
-	/// the sum of distances to all Receivers. Return an optional
-	/// with x, y, z coordinates if the operation succeed, nil otherwise.
-	mutating func solveEmitterPosition(withStep step: Float = 0.1) -> [Float]? {
-		
-		// Ensure there is four or more receivers in the dictionnary to be able to solve the emitter position
-		guard getReceiverCount() >= 4 else { return nil }
-		
-		// Reduce area of research
-		computeResearchArea()
-		
-		// Process each sum of distances in the searching area to find the lowest one
-		// Initializing default value of min distance by using a random receiver's distance
-		var minDistance: Float = 0.0
-		for (_, receiver) in receivers { minDistance += receiver.distance } // Initialize defaut minimum distance value
-		var emitterPosition: [Float]?
-		
-		for x in stride(from: minAreaPoint[0], to: maxAreaPoint[0], by: step) {
-			for y in stride(from: minAreaPoint[1], to: maxAreaPoint[1], by: step) {
-				for z in stride(from: minAreaPoint[2], to: maxAreaPoint[2], by: step) {
-					
-					// Process and sum distances to all Receivers
-					var distance: Float = 0.0
-					
-					for (_, receiver) in receivers {
-						distance += abs(sqrtf(pow(x - receiver.x!,2) + pow(y - receiver.y!,2) + pow(z - receiver.z!,2)) - receiver.distance)
-					}
-					
-					// Keep the lowest distance
-					if distance < minDistance {
-						minDistance = distance
-						emitterPosition = [x, y, z]
-					}
-					
-				}
-			}
-		}
-		
-		return emitterPosition
-	}
+    /// Try to solve position of the emitter by minimizing
+    /// the sum of distances to all Receivers. Return an optional
+    /// with x, y, z coordinates if the operation succeed, nil otherwise.
+    mutating func solveEmitterPosition(withStep step: Float = 0.1) -> [Float]? {
+
+        // Ensure there is four or more receivers in the dictionnary to be able to solve the emitter position
+        guard getReceiverCount() >= 4 else { return nil }
+
+        // Reduce area of research
+        computeResearchArea()
+
+        // Process each sum of distances in the searching area to find the lowest one
+        // Initializing default value of min distance by using a random receiver's distance
+        var minDistance: Float = 0.0
+        for (_, receiver) in receivers { minDistance += receiver.distance } // Initialize defaut minimum distance value
+        var emitterPosition: [Float]?
+
+        for x in stride(from: minAreaPoint[0], to: maxAreaPoint[0], by: step) {
+            for y in stride(from: minAreaPoint[1], to: maxAreaPoint[1], by: step) {
+                for z in stride(from: minAreaPoint[2], to: maxAreaPoint[2], by: step) {
+
+                    // Process and sum distances to all Receivers
+                    var distance: Float = 0.0
+
+                    for (_, receiver) in receivers {
+                        distance += abs(sqrtf(pow(x - receiver.x!,2) + pow(y - receiver.y!,2) + pow(z - receiver.z!,2)) - receiver.distance)
+                    }
+
+                    // Keep the lowest distance
+                    if distance < minDistance {
+                        minDistance = distance
+                        emitterPosition = [x, y, z]
+                    }
+
+                }
+            }
+        }
+
+        return emitterPosition
+    }
 ```
 
 ![](img/Computational%20Result.png)
