@@ -121,6 +121,16 @@ Typically, we have mutliple **Devices**, such as an **Emitter** and a **Receiver
 
 #### Analytical
 
+To make the analytical resolution, we used Géogebra3D to make an estimation of the emitter position. We look for the intersection intersecting the most receivers (the red line) to place a point. We will try to find the position on this line that is closest to the last sphere that is not part of the intersection.
+
+![Geogebra3D View 1.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20View%201.png)
+
+![Geogebra3D View 2.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20View%202.png)
+
+We obtain the H point, a result close to the computational analysis.
+
+![Geogebra3D Screenshoot Cut.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20Screenshoot%20Cut.png)
+
 #### Computational
 
 Using **Swift 5**, a recent and convenient programming language, implementing the solver function gives us the following code :
