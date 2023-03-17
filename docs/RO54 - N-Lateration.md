@@ -121,15 +121,15 @@ Typically, we have mutliple **Devices**, such as an **Emitter** and a **Receiver
 
 #### Analytical
 
-To make the analytical resolution, we used Géogebra3D to make an estimation of the emitter position. We look for the intersection intersecting the most receivers (the red line) to place a point. We will try to find the position on this line that is closest to the last sphere that is not part of the intersection.
+To make the analytical resolution, we used Geogebra3D to estimate position. We look for the intersection of most receivers (the red line) to place a point. Then, we will try to find the most accurate position on this line which is the closest to the last sphere that is not part of the intersection.
 
-![Geogebra3D View 1.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20View%201.png)
+![Geogebra3D View 1.png](img/Geogebra3D%20View%201.png)
 
-![Geogebra3D View 2.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20View%202.png)
+![Geogebra3D View 2.png](img/Geogebra3D%20View%202.png)
 
-We obtain the H point, a result close to the computational analysis.
+We obtain the H point, a result close to the computational analysis (see below).
 
-![Geogebra3D Screenshoot Cut.png](C:\Users\nderaisi\OneDrive%20-%20Universite%20De%20Technologie%20De%20Belfort-Montbeliard\Documents\RO54\TP1\N-Lateration\docs\img\Geogebra3D%20Screenshoot%20Cut.png)
+![Geogebra3D Screenshoot Cut.png](img/Geogebra3D%20Screenshoot%20Cut.png)
 
 #### Computational
 
@@ -205,8 +205,6 @@ Then, go the folder containing the **Package.swift** file, provided with our N-L
 > swift run
 ```
 
-You should have the following result :
+You should have the following result print in your shell :
 
 ![](img/Computational%20Result.png)
-
-If you open the source files to look at the implementation, we recommend you to check the [Official Swift Programming Book](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/) to learn more about this awesome language and all the features it provides.
