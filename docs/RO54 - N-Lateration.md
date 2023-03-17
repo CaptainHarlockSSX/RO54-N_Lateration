@@ -8,7 +8,9 @@
 > 
 > Class Diagram has been created with **Mermaid**.
 > 
-> Implementation has been done in **Swift programming language**.
+> Implementation has been done in **Swift programming language**. Go to *Appendix 1* at the end of the report to get ressources about installing swift.
+
+---
 
 ## Concept and example of an N-Lateration problem
 
@@ -83,6 +85,10 @@ Using **GeoGebra** website, we can draw a 3D representation of the datas and vis
 
 ![3D Representation of the problem](img/Geogebra%203D%20Graph.png)
 
+Summing up what was explained above with a clear 2D representation, we got :
+
+![](img/N%20Lateration%20Schema.png)
+
 ## Algorithm
 
 In computer science, solving this problem by taking the measurement error into account results in the implementation of a **minimization algorithm**. Here, we want to <u>minimize the sum of all distances to the emitter</u>.
@@ -120,46 +126,46 @@ Typically, we have mutliple **Devices**, such as an **Emitter** and a **Receiver
 Using **Swift 5**, a recent and convenient programming language, implementing the solver function gives us the following code :
 
 ```swift
-	/// Try to solve position of the emitter by minimizing
-	/// the sum of distances to all Receivers. Return an optional
-	/// with x, y, z coordinates if the operation succeed, nil otherwise.
-	mutating func solveEmitterPosition(withStep step: Float = 0.1) -> [Float]? {
-		
-		// Ensure there is four or more receivers in the dictionnary to be able to solve the emitter position
-		guard getReceiverCount() >= 4 else { return nil }
-		
-		// Reduce area of research
-		computeResearchArea()
-		
-		// Process each sum of distances in the searching area to find the lowest one
-		// Initializing default value of min distance by using a random receiver's distance
-		var minDistance: Float = 0.0
-		for (_, receiver) in receivers { minDistance += receiver.distance } // Initialize defaut minimum distance value
-		var emitterPosition: [Float]?
-		
-		for x in stride(from: minAreaPoint[0], to: maxAreaPoint[0], by: step) {
-			for y in stride(from: minAreaPoint[1], to: maxAreaPoint[1], by: step) {
-				for z in stride(from: minAreaPoint[2], to: maxAreaPoint[2], by: step) {
-					
-					// Process and sum distances to all Receivers
-					var distance: Float = 0.0
-					
-					for (_, receiver) in receivers {
-						distance += abs(sqrtf(pow(x - receiver.x!,2) + pow(y - receiver.y!,2) + pow(z - receiver.z!,2)) - receiver.distance)
-					}
-					
-					// Keep the lowest distance
-					if distance < minDistance {
-						minDistance = distance
-						emitterPosition = [x, y, z]
-					}
-					
-				}
-			}
-		}
-		
-		return emitterPosition
-	}
+    /// Try to solve position of the emitter by minimizing
+    /// the sum of distances to all Receivers. Return an optional
+    /// with x, y, z coordinates if the operation succeed, nil otherwise.
+    mutating func solveEmitterPosition(withStep step: Float = 0.1) -> [Float]? {
+
+        // Ensure there is four or more receivers in the dictionnary to be able to solve the emitter position
+        guard getReceiverCount() >= 4 else { return nil }
+
+        // Reduce area of research
+        computeResearchArea()
+
+        // Process each sum of distances in the searching area to find the lowest one
+        // Initializing default value of min distance by using a random receiver's distance
+        var minDistance: Float = 0.0
+        for (_, receiver) in receivers { minDistance += receiver.distance } // Initialize defaut minimum distance value
+        var emitterPosition: [Float]?
+
+        for x in stride(from: minAreaPoint[0], to: maxAreaPoint[0], by: step) {
+            for y in stride(from: minAreaPoint[1], to: maxAreaPoint[1], by: step) {
+                for z in stride(from: minAreaPoint[2], to: maxAreaPoint[2], by: step) {
+
+                    // Process and sum distances to all Receivers
+                    var distance: Float = 0.0
+
+                    for (_, receiver) in receivers {
+                        distance += abs(sqrtf(pow(x - receiver.x!,2) + pow(y - receiver.y!,2) + pow(z - receiver.z!,2)) - receiver.distance)
+                    }
+
+                    // Keep the lowest distance
+                    if distance < minDistance {
+                        minDistance = distance
+                        emitterPosition = [x, y, z]
+                    }
+
+                }
+            }
+        }
+
+        return emitterPosition
+    }
 ```
 
 ![](img/Computational%20Result.png)
@@ -167,3 +173,30 @@ Using **Swift 5**, a recent and convenient programming language, implementing th
 As above, the returned position of the Emitter with our demo datas is right.
 
 > Note that using an iterative algorithm may be really slow with more datas. Other approaches exists, such as **Gradient descent**, which try to find global minimum of a function using **partial derivatives**.
+
+---
+
+## Appendix 1 - Installing Swift
+
+Swift is the main language of Apple devices since almost ten years. It is developed both by Apple and the open-source community. It has been port on Linux and recently on Windows. Though, you can install **Swift Toolchain** on Linux / Windows following the official tutorials, or using XCode IDE if you are on macOS.
+
+- [Swift.org - Download Swift](https://www.swift.org/download/)
+
+When it is done, ensure Swift is ready by running the following command in your shell :
+
+```bash
+> swift --version
+```
+
+Then, go the folder containing the **Package.swift** file, provided with our N-Lateration project archive, and run :
+
+```bash
+> swift build
+> swift run
+```
+
+You should have the following result :
+
+![](img/Computational%20Result.png)
+
+If you open the source files to look at the implementation, we recommend you to check the [Official Swift Programming Book](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/) to learn more about this awesome language and all the features it provides.
