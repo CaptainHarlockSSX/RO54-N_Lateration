@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "pythonkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pvieito/PythonKit.git",
+      "state" : {
+        "revision" : "81f621d094a7c8923207efe5178f50dba1b56c39",
+        "version" : "0.3.1"
+      }
+    },
+    {
       "identity" : "swift-numerics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-numerics",

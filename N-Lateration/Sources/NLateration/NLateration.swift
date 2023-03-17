@@ -23,5 +23,10 @@ public struct NLateration {
 		} else {
 			print("❌ Failed to solve emitter position with \(nLateration.getReceiverCount()) receivers. Ensure you have at least 4 Receivers with their position and distance loaded in the N-Lateration solver.")
 		}
+		
+		// Load PythonBridge
+		let pyBridge = PythonBridge()
+		pyBridge.coucou()
+
     }
 }
