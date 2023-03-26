@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import simd
 
 /// N-Lateration Solver Structure
 /// Geolocalize a Device by providing one Emitter and at least
