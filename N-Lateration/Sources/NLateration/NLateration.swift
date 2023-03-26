@@ -20,13 +20,16 @@ public struct NLateration {
 		let emitterPosition = nLateration.solveEmitterPosition()
 		if (emitterPosition != nil) {
 			print("✅ The emitter coordinates are \(emitterPosition!), solved with \(nLateration.getReceiverCount()) receivers.")
+			// Load PythonBridge
+			let pyBridge = PythonBridge()
+			pyBridge.coucou(p1:[receiver1.x!,receiver1.y!,receiver1.z!],d1:receiver1.distance,
+							p2:[receiver2.x!,receiver2.y!,receiver2.z!],d2:receiver2.distance,
+							p3:[receiver3.x!,receiver3.y!,receiver3.z!],d3:receiver3.distance,
+							p4:[receiver4.x!,receiver4.y!,receiver4.z!],d4:receiver4.distance,
+							e:emitterPosition)
 		} else {
 			print("❌ Failed to solve emitter position with \(nLateration.getReceiverCount()) receivers. Ensure you have at least 4 Receivers with their position and distance loaded in the N-Lateration solver.")
 		}
-		
-		// Load PythonBridge
-		let pyBridge = PythonBridge()
-		pyBridge.coucou()
 
     }
 }
