@@ -4,13 +4,16 @@ import PythonKit
 
 struct PythonBridge {
     func plot3DGraph(p1:[Float],d1:Float,p2:[Float],d2:Float,p3:[Float],d3:Float,p4:[Float],d4:Float,e:[Float]?){
+        
+        //define python package in constant
         let np = Python.import("numpy")
         let plt = Python.import("matplotlib.pyplot")
 
+        //build the graph
         let fig = plt.figure()
         let ax = fig.add_subplot(projection:"3d")
 
-
+        //translate types according to pythonKit conditions
         let pyP1 = np.array(p1)
         let pyD1 = PythonObject(d1)
         let pyP2 = np.array(p2)
@@ -62,7 +65,6 @@ struct PythonBridge {
         let zc4 = 0.1 * np.outer(np.ones(np.size(u)), np.cos(v)) + pyP4[2]
 
         // Plot the surface
-
         ax.plot_surface(x1, y1, z1, alpha:0.2)
         ax.plot_surface(x2, y2, z2, alpha:0.2)
         ax.plot_surface(x3, y3, z3, alpha:0.2)
