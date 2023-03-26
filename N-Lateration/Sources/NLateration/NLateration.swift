@@ -1,7 +1,7 @@
 @main
 public struct NLateration {
     public static func main() {
-	
+
 		// Create some receivers and the emitter to geolocalize
 		let receiver1 = Receiver(x: 0.5, y: 0.5, z: 0.5, distance: 3, ipAdress: "192.168.0.0")
 		let receiver2 = Receiver(x: 4.0, y: 0.0, z: 0.0, distance: 2, ipAdress: "192.168.0.1")
@@ -20,13 +20,21 @@ public struct NLateration {
 		let emitterPosition = nLateration.solveEmitterPosition()
 		if (emitterPosition != nil) {
 			print("✅ The emitter coordinates are \(emitterPosition!), solved with \(nLateration.getReceiverCount()) receivers.")
+			
 			// Load PythonBridge
-			let pyBridge = PythonBridge()
-			pyBridge.plot3DGraph(p1:[receiver1.x!,receiver1.y!,receiver1.z!],d1:receiver1.distance,
-								p2:[receiver2.x!,receiver2.y!,receiver2.z!],d2:receiver2.distance,
-								p3:[receiver3.x!,receiver3.y!,receiver3.z!],d3:receiver3.distance,
-								p4:[receiver4.x!,receiver4.y!,receiver4.z!],d4:receiver4.distance,
-								e:emitterPosition)
+			var errorState = false
+			guard let pyBridge = Optional(PythonBridge()) else {
+				errorState = true
+				print ("There is probably an error in your python/pip install")
+				return
+			}
+			if (!errorState){
+				pyBridge.plot3DGraph(p1:[receiver1.x!,receiver1.y!,receiver1.z!],d1:receiver1.distance,
+									p2:[receiver2.x!,receiver2.y!,receiver2.z!],d2:receiver2.distance,
+									p3:[receiver3.x!,receiver3.y!,receiver3.z!],d3:receiver3.distance,
+									p4:[receiver4.x!,receiver4.y!,receiver4.z!],d4:receiver4.distance,
+									e:emitterPosition)
+			}
 		} else {
 			print("❌ Failed to solve emitter position with \(nLateration.getReceiverCount()) receivers. Ensure you have at least 4 Receivers with their position and distance loaded in the N-Lateration solver.")
 		}
