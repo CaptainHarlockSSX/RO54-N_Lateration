@@ -186,6 +186,28 @@ As above, the returned position of the Emitter with our demo datas is right.
 
 ---
 
+## Additionnal work - Python Bridge / Plot Graph
+
+At the beginning of this tutorial, we made a piece of code in python to have a quick graphical representation of our problem.
+
+Once the implementation was finished, we found it a pity to have to stop there (without a graphical representation) and throw away some of our code. That's why we were interested in importing python code into swift. Thus, we offered ourselves the possibility to take advantage of the python packages that we already knew in swift.
+
+For that, we explored the installation of dependencies in Swift and import the one of pythonKit allowing to build a bridge between the python packages installed in our system (pip).
+
+Thanks to this and to a little adaptation of the code, we could use python libraries such as numpy and mathplotlib.
+
+There are conditions to use the pythonKit dependancy.
+
+- Install python and pip
+
+- Install numpy and matplotlib :
+  
+  ```bash
+  > pip install numpy matplotlib
+  ```
+
+---
+
 ## Appendix 1 - Installing Swift
 
 Swift is the main language of Apple devices since almost ten years. It is developed both by Apple and the open-source community. It has been port on Linux and recently on Windows. Though, you can install **Swift Toolchain** on Linux / Windows following the official tutorials, or using XCode IDE if you are on macOS.
@@ -208,3 +230,9 @@ Then, go the folder containing the **Package.swift** file, provided with our N-L
 You should have the following result print in your shell :
 
 ![](img/Computational%20Result.png)
+
+If you use ubuntu, don't forget to export your bin swift folder :
+
+```bash
+> export PATH=/path/to/usr/bin:"${PATH}"
+```
