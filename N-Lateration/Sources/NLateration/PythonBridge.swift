@@ -3,7 +3,7 @@ import PythonKit
 
 
 struct PythonBridge {
-    func coucou(p1:[Float],d1:Float,p2:[Float],d2:Float,p3:[Float],d3:Float,p4:[Float],d4:Float,e:[Float]?){
+    func plot3DGraph(p1:[Float],d1:Float,p2:[Float],d2:Float,p3:[Float],d3:Float,p4:[Float],d4:Float,e:[Float]?){
         let np = Python.import("numpy")
         let plt = Python.import("matplotlib.pyplot")
 
